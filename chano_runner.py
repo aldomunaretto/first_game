@@ -30,6 +30,16 @@ def collisions(player,obstacles):
                 return False
     return True    
 
+def player_animation():
+    global player_surface, player_index
+    if player_rectangle.bottom < 300:
+        player_surface = player_jump_surface
+    else:
+        player_index += 0.1
+        if player_index >= len(player_walk_surface): player_index = 0
+        player_surface = player_walk_surface[int(player_index)]
+
+
 # Pygame initialization
 pygame.init()
 screen = pygame.display.set_mode((800,400))
@@ -41,6 +51,8 @@ font = pygame.font.Font('font/Pixeltype.ttf',50)
 game_active = False
 start_time = 0
 time = 0
+player_index = 0
+player_gravity = 0
 obstacle_rect_list = []
 
 # test_surface = pygame.Surface((100,200))
@@ -61,9 +73,12 @@ snail_surface = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
 fly_surface = pygame.image.load('graphics/fly/fly1.png').convert_alpha()
 
 # Player
-player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+player_walk1_surface = pygame.image.load('graphics/player/player_walk_1.png').convert_alpha()
+player_walk2_surface = pygame.image.load('graphics/player/player_walk_2.png').convert_alpha()
+player_walk_surface = [player_walk1_surface,player_walk2_surface]
+player_jump_surface = pygame.image.load('graphics/player/player_jump.png').convert_alpha()
+player_surface = player_walk_surface[player_index]
 player_rectangle = player_surface.get_rect(midbottom = (80,300))
-player_gravity = 0
 
 
 # Init Screen
@@ -73,7 +88,7 @@ start_rectangle = start_surface.get_rect(midbottom = (400,350))
 title_surface = font.render("Luciano's Pixel Runner", False, 'Darkblue')
 title_rectangle = title_surface.get_rect(midbottom = (400,50))
 
-player_init_surface = pygame.image.load('graphics/Player/player_stand.png').convert_alpha()
+player_init_surface = pygame.image.load('graphics/player/player_stand.png').convert_alpha()
 player_init_surface = pygame.transform.rotozoom(player_init_surface,0,2)
 player_init_rectangle = player_init_surface.get_rect(center = (400,200))
 
@@ -134,6 +149,7 @@ while True:
         player_gravity += 1
         player_rectangle.bottom += player_gravity
         if player_rectangle.bottom > 300: player_rectangle.bottom = 300
+        player_animation()
         screen.blit(player_surface,player_rectangle)
 
         # Obstacle movement
