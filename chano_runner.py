@@ -3,7 +3,7 @@ import sys
 
 def display_time():
     current_time = pygame.time.get_ticks() - start_time
-    time_surface = font.render(f'Time: {round(current_time/1000,1)} seg.', False, (64,64,64))
+    time_surface = font.render(f'Time: {round(current_time/1000,1)} sec', False, (64,64,64))
     time_rectangle = time_surface.get_rect(center = (400,50))
     screen.blit(time_surface,time_rectangle)
     return current_time
@@ -37,15 +37,15 @@ player_gravity = 0
 
 
 # Init Screen
-start_surface = font.render('Start', False, 'Darkblue')
-start_rectangle = start_surface.get_rect(midbottom = (400,50))
+start_surface = font.render('Click to Start', False, 'Darkred')
+start_rectangle = start_surface.get_rect(midbottom = (400,350))
 
-quit_surface = font.render('Quit', False, 'Darkred')
-quit_rectangle = quit_surface.get_rect(midbottom = (400,100))
+title_surface = font.render("Luciano's Pixel Runner", False, 'Darkblue')
+title_rectangle = title_surface.get_rect(midbottom = (400,50))
 
 player_init_surface = pygame.image.load('graphics/Player/player_stand.png').convert_alpha()
 player_init_surface = pygame.transform.rotozoom(player_init_surface,0,2)
-player_init_rectangle = player_init_surface.get_rect(center = (400,250))
+player_init_rectangle = player_init_surface.get_rect(center = (400,200))
 
 while True:
     for event in pygame.event.get():
@@ -60,10 +60,10 @@ while True:
                 player_rectangle.bottom = 300
                 start_time = pygame.time.get_ticks()
                 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if quit_rectangle.collidepoint(event.pos):
-                pygame.quit()
-                sys.exit()
+        # if event.type == pygame.MOUSEBUTTONDOWN:
+        #     if quit_rectangle.collidepoint(event.pos):
+        #         pygame.quit()
+        #         sys.exit()
 
         if player_rectangle.bottom == 300:
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -98,8 +98,12 @@ while True:
 
     else:
         screen.fill((90,129,162))
+
+        last_time_message_surface = font.render(f'Your last run took {round(time/1000,1)} sec',False,(11,196,169))
+        last_time_message_rectangle = last_time_message_surface.get_rect(midtop = (400,360))
+        if time != 0: screen.blit(last_time_message_surface,last_time_message_rectangle) 
         screen.blit(start_surface,start_rectangle)
-        screen.blit(quit_surface,quit_rectangle)
+        screen.blit(title_surface,title_rectangle)
         screen.blit(player_init_surface,player_init_rectangle)
 
     pygame.display.update()
