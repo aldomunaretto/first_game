@@ -23,12 +23,21 @@ def obstacle_movement(obstacle_list):
     else:
         return []
 
+def collisions(player,obstacles):
+    if obstacles:
+        for obstacle in obstacles:
+            if player.colliderect(obstacle):
+                return False
+    return True    
+
+# Pygame initialization
 pygame.init()
 screen = pygame.display.set_mode((800,400))
 pygame.display.set_caption("Luciano's Runner")
 clock = pygame.time.Clock()
 font = pygame.font.Font('font/Pixeltype.ttf',50)
 
+# Vaiables initialization
 game_active = False
 start_time = 0
 time = 0
@@ -131,11 +140,13 @@ while True:
         obstacle_rect_list = obstacle_movement(obstacle_rect_list)
 
         # Collision
-        # if player_rectangle.colliderect(snail_rectangle):
-        #     game_active = False
+        game_active = collisions(player_rectangle, obstacle_rect_list)
 
     else:
         screen.fill((90,129,162))
+        obstacle_rect_list.clear()
+        player_rectangle.bottom = 300
+        player_gravity = 0
 
         last_time_message_surface = font.render(f'Your last run took {round(time/1000,1)} sec',False,(11,196,169))
         last_time_message_rectangle = last_time_message_surface.get_rect(midtop = (400,360))
