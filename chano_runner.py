@@ -13,7 +13,7 @@ def display_time():
 def obstacle_movement(obstacle_list):
     if obstacle_list:
         for obstacle_rect in obstacle_list:
-            obstable_rect -= 3
+            obstacle_rect.x -= 3
             screen.blit(snail_surface,obstacle_rect)
         return obstacle_list
     else:
@@ -65,7 +65,7 @@ player_init_rectangle = player_init_surface.get_rect(center = (400,200))
 
 # Timer
 obstacle_timer = pygame.USEREVENT +1
-pygame.time.set_timer(obstacle_timer,900)
+pygame.time.set_timer(obstacle_timer,1500)
 
 
 while True:
@@ -97,7 +97,7 @@ while True:
                         player_gravity = -20
 
             if event.type == obstacle_timer:
-                obstacle_rect_list.append(snail_surface.get_rect(bottomrigth = (randint(900,1900),300)))
+                obstacle_rect_list.append(snail_surface.get_rect(bottomright = (randint(900,1100),300)))
 
     if game_active:
         screen.blit(sky_surface,(0,0))
