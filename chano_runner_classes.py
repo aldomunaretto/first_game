@@ -159,11 +159,6 @@ while True:
                 start_time = pygame.time.get_ticks()
 
         if game_active:
-            # if player_rectangle.bottom == 300:
-            #     if event.type == pygame.MOUSEBUTTONDOWN:
-            #         if player_rectangle.collidepoint(event.pos):
-            #             player_gravity = -20
-
             if event.type == obstacle_timer:
                 obstacle_group.add(Obstacle(choice(['fly','snail','snail','snail'])))
 
