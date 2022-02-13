@@ -46,6 +46,9 @@ screen = pygame.display.set_mode((800,400))
 pygame.display.set_caption("Luciano's Runner")
 clock = pygame.time.Clock()
 font = pygame.font.Font('font/Pixeltype.ttf',50)
+background_music = pygame.mixer.Sound('audio/music.wav')
+background_music.set_volume(0.05)
+background_music.play(loops = -1)
 
 # Vaiables initialization
 game_active = False
@@ -89,6 +92,8 @@ player_walk_surface = [player_walk1_surface,player_walk2_surface]
 player_jump_surface = pygame.image.load('graphics/player/player_jump.png').convert_alpha()
 player_surface = player_walk_surface[player_index]
 player_rectangle = player_surface.get_rect(midbottom = (80,300))
+player_jump_sound = pygame.mixer.Sound('audio/jump.mp3')
+player_jump_sound.set_volume(0.5)
 
 
 # Init Screen
@@ -136,10 +141,13 @@ while True:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if player_rectangle.collidepoint(event.pos):
                         player_gravity = -20
+                        player_jump_sound.play()
+
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         player_gravity = -20
+                        player_jump_sound.play()
 
             if event.type == obstacle_timer:
                 if randint(0,2):
