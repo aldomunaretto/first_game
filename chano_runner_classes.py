@@ -105,8 +105,8 @@ screen = pygame.display.set_mode((800,400))
 pygame.display.set_caption("Luciano's Runner")
 clock = pygame.time.Clock()
 font = pygame.font.Font('font/Pixeltype.ttf',50)
-background_music = pygame.mixer.Sound('audio/music.wav')
-background_music.set_volume(0.05)
+background_music = pygame.mixer.Sound('audio/dynamite.mp3')
+background_music.set_volume(0.2)
 background_music.play(loops = -1)
 
 
